@@ -1,9 +1,44 @@
+<?php
+
+include 'include/header.php';
+
+?>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "quiz_system";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$result = null;
+
+
+$sql = "SELECT * FROM complete";
+$result = $conn->query($sql);
+
+
+if ($result === false) {
+  echo "Error retrieving records: " . $conn->error;
+  exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="css/style_foo.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Content</title>
+   
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -114,6 +149,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Student Content</h1>
@@ -137,47 +173,29 @@
                     <th>Quiz Number</th>
                     <th>Grade</th>
                     <th>Status</th>
+                  
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>85%</td>
-                    <td>Pass</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>78%</td>
-                    <td>Pass</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>90%</td>
-                    <td>Pass</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>82%</td>
-                    <td>Pass</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>75%</td>
-                    <td>Pass</td>
-                </tr>
+            <?php
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["id"] . "</td>";
+        echo "<td>" . $row["GRADE"] . "</td>";
+        echo "<td>" . $row["STATUS"] . "</td>";
+       
+        echo "</tr>";
+      }
+    } else {
+      echo "<tr><td colspan='8'>No records found</td></tr>";
+    }
+    ?>
             </tbody>
         </table>
 
         <!-- Feedback and Support -->
-        <div class="feedback-form">
-            <h2>Feedback and Support</h2>
-            <p>If you have any questions or feedback, please feel free to contact us using the form below:</p>
-            <form action="#" method="post">
-                <textarea id="feedback" name="feedback" rows="4" placeholder="Enter your feedback here"></textarea><br>
-                <button type="submit" class="btn-submit">Submit</button>
-            </form>
-        </div>
-
+        
         <!-- Link to LMS -->
         <div class="lms-link">
             <a href="https://your-lms-url.com" target="_blank">Access Course Materials and Grades on LMS</a>
@@ -187,3 +205,8 @@
     <footer>Made by Karar Haider</footer>
 </body>
 </html>
+<?php
+
+include 'include/footer.php';
+
+?>
