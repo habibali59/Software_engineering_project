@@ -87,7 +87,7 @@ $error ="Registration Not successfully";
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Gym Management System</title>
+	<title>Register</title>
 	<meta charset="UTF-8">
 	<!-- Stylesheets -->
 	<style>
